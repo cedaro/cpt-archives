@@ -3,7 +3,7 @@
  * Plugin Name: CPT Archives
  * Plugin URI: https://github.com/bradyvercher/wp-cpt-archives
  * Description: Manage post type archive titles, descriptions, and permalink slugs from the dashboard.
- * Version: 1.0.0
+ * Version: 2.0.0
  * Author: Blazer Six
  * Author URI: http://www.blazersix.com/
  * License: GPL-2.0+
@@ -11,7 +11,7 @@
  *
  * @package BlazerSix\CPTArchives
  * @author Brady Vercher <brady@blazersix.com>
- * @copyright Copyright (c) 2012, Blazer Six, Inc.
+ * @copyright Copyright (c) 2013, Blazer Six, Inc.
  * @license GPL-2.0+
  *
  * @todo Update nav menu classes to reflect current, parent, and ancestor status.
@@ -52,6 +52,8 @@ class CPT_Archives {
 			add_action( 'init', array( $this, 'init_admin' ), 50 );
 			add_action( 'parent_file', array( $this, 'parent_file' ) );
 			add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
+			add_action( 'add_meta_boxes_cpt_archive', array( $this, 'remove_slug_meta_box' ) );
+			add_filter( 'get_sample_permalink_html', array( $this, 'disable_sample_permalink_html' ), 10, 2 );
 
 			if ( apply_filters( 'cpt_archives_add_submenus', true ) ) {
 				add_action( 'admin_menu', array( $this, 'admin_menu' ) );
@@ -139,7 +141,7 @@ class CPT_Archives {
 	public function init_admin() {
 		$archives = array();
 
-		$post_types = get_post_types( array( 'public' => true, '_builtin' => false ) );
+		$post_types = get_post_types( array( 'public' => true ) );
 
 		if ( $post_types ) {
 			foreach ( $post_types as $post_type ) {
@@ -185,7 +187,7 @@ class CPT_Archives {
 
 			// Add the submenu item.
 			add_submenu_page(
-				'edit.php?post_type=' . $post_type,
+				( 'post' == $post_type ) ? 'edit.php' : 'edit.php?post_type=' . $post_type,
 				$archive_type_object->labels->singular_name,
 				$archive_type_object->labels->singular_name,
 				$archive_type_object->cap->edit_posts,
@@ -286,7 +288,9 @@ class CPT_Archives {
 			update_option( 'cpt_archives', $ids );
 			update_option( 'cpt_archives_inactive', $inactive );
 
-			flush_rewrite_rules();
+			if ( $this->rewrites_enabled() ) {
+				flush_rewrite_rules();
+			}
 		}
 	}
 
@@ -373,13 +377,17 @@ class CPT_Archives {
 
 		$ids = $this->get_archive_ids();
 
-		if ( empty( $ids ) ) {
+		if ( empty( $ids ) || ! $this->rewrites_enabled() ) {
 			return $rules;
 		}
 
 		foreach ( $ids as $post_type => $archive_id ) {
 			$archive_post = get_post( $archive_id );
 			$post_type_object = get_post_type_object( $post_type );
+
+			if ( ! $this->post_type_rewrites_enabled( $post_type ) ) {
+				continue;
+			}
 
 			$old_slug = $this->get_post_type_archive_slug( $post_type );
 			$new_slug = $archive_post->post_name;
@@ -464,11 +472,16 @@ class CPT_Archives {
 	public function post_type_link( $permalink, $post, $leavename ) {
 		global $wp_rewrite;
 
-		if ( 'cpt_archive' == $post->post_type  ) {
+		if ( 'cpt_archive' == $post->post_type ) {
 			$post_type = $this->is_post_type_archive_id( $post->ID );
 			$post_type_object = get_post_type_object( $post_type );
 
-			if ( get_option( 'permalink_structure' ) ) {
+			if ( 'post' == $post_type ) {
+				$page_for_posts = get_option( 'page_for_posts' );
+				$permalink = ( $page_for_posts ) ? get_permalink( $page_for_posts ) : home_url( '/' );
+			} elseif ( ! $this->post_type_rewrites_enabled( $post_type ) ) {
+				$permalink = get_post_type_archive_link( $post_type );
+			} elseif ( get_option( 'permalink_structure' ) ) {
 				$front = '/';
 				if ( isset( $post_type_object->rewrite ) && $post_type_object->rewrite['with_front'] ) {
 					$front = $wp_rewrite->front;
@@ -497,7 +510,7 @@ class CPT_Archives {
 	 * @return string
 	 */
 	public function post_type_archive_link( $link, $post_type ) {
-		if ( $archive_id = $this->get_post_type_archive( $post_type ) ) {
+		if ( $this->post_type_rewrites_enabled( $post_type ) && ( $archive_id = $this->get_post_type_archive( $post_type ) ) ) {
 			$link = get_permalink( $archive_id );
 		}
 
@@ -514,7 +527,7 @@ class CPT_Archives {
 	 * @param WP_Post $post_before Post object before udpate.
 	 */
 	public function post_updated( $post_id, $post_after, $post_before ) {
-		if ( $this->is_post_type_archive_id( $post_id ) && $post_after->post_name != $post_before->post_name ) {
+		if ( $this->rewrites_enabled() && $this->is_post_type_archive_id( $post_id ) && $post_after->post_name != $post_before->post_name ) {
 			flush_rewrite_rules();
 		}
 	}
@@ -556,6 +569,78 @@ class CPT_Archives {
 		}
 
 		return $title;
+	}
+
+	/**
+	 * Toggle whether or not rewrite rules can be customized using the
+	 * cpt_archive slug.
+	 *
+	 * @since 2.0.0
+	 */
+	public function rewrites_enabled() {
+		return apply_filters( 'enable_cpt_archive_rewrites', false );
+	}
+
+	/**
+	 * Allow rewrite rule customization to be disabled on individual post types.
+	 *
+	 * @since 2.0.0
+	 */
+	public function get_disabled_rewrites() {
+		return apply_filters( 'cpt_archive_disable_post_type_rewrites', array( 'post', 'page' ) );
+	}
+
+	/**
+	 * Determine if rewrite rule customization is enable for a particular post
+	 * type.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param int|string $archive A cpt_archive ID or a post type name.
+	 * @return bool
+	 */
+	public function post_type_rewrites_enabled( $archive ) {
+		$post_type = ( is_numeric( $archive ) ) ? $this->is_post_type_archive_id( $archive ) : $archive;
+
+		$global_status = $this->rewrites_enabled();
+		$post_type_status = in_array( $post_type, $this->get_disabled_rewrites() ) ? false : true;
+
+		return $global_status && $post_type_status;
+	}
+
+	/**
+	 * Remove the slug meta box for a CPT archive if rewrite rule customization
+	 * is disabled.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $post_type Post type name.
+	 * @param WP_Post $post Post object.
+	 */
+	public function remove_slug_meta_box( $post ) {
+		if ( $this->post_type_rewrites_enabled( $post->ID ) ) {
+			return;
+		}
+
+		remove_meta_box( 'slugdiv', 'cpt_archive', 'normal' );
+	}
+
+	/**
+	 * Disable the permalink editor under the post title if rewrite rule
+	 * customization is disabled.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $html Default sample permalink HTML.
+	 * @param int $post_id Post ID.
+	 * @return string
+	 */
+	public function disable_sample_permalink_html( $html, $post_id ) {
+		if ( 'cpt_archive' != get_post_type( $post_id ) || $this->post_type_rewrites_enabled( $post_id ) ) {
+			return $html;
+		}
+
+		return '';
 	}
 }
 
