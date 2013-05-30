@@ -8,6 +8,8 @@
  * Author URI: http://www.blazersix.com/
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: cpt-archives
+ * Domain Path: /languages/
  *
  * @package BlazerSix\CPTArchives
  * @author Brady Vercher <brady@blazersix.com>
@@ -62,18 +64,17 @@ class CPT_Archives {
 	}
 
 	/**
-	 * Support localization for the plugin.
+	 * Allow the plugin strings to be localized.
 	 *
 	 * @see http://www.geertdedeckere.be/article/loading-wordpress-language-files-the-right-way
 	 *
 	 * @since 1.0.0
 	 */
 	public function localize() {
-		$domain = 'cpt-archives-i18n';
-		// The "plugin_locale" filter is also used in load_plugin_textdomain()
+		$domain = 'cpt-archives';
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
-		load_textdomain( $domain, WP_LANG_DIR . '/cpt-archives/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, false, plugin_dir_path( __FILE__ ) . 'languages/' );
+		load_textdomain( $domain, WP_LANG_DIR . '/cpt-archives/' . $locale . '.mo' );
+		load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . 'languages/' );
 	}
 
 	/**
@@ -83,19 +84,19 @@ class CPT_Archives {
 	 */
 	public function init() {
 		$labels = array(
-			'name'               => _x( 'Archives', 'post format general name', 'cpt-archives-i18n' ),
-			'singular_name'      => _x( 'Archive', 'post format singular name', 'cpt-archives-i18n' ),
-			'add_new'            => _x( 'Add New', 'cpt_archive',               'cpt-archives-i18n' ),
-			'add_new_item'       => __( 'Add New Archive',                      'cpt-archives-i18n' ),
-			'edit_item'          => __( 'Edit Archive',                         'cpt-archives-i18n' ),
-			'new_item'           => __( 'New Archive',                          'cpt-archives-i18n' ),
-			'view_item'          => __( 'View Archive',                         'cpt-archives-i18n' ),
-			'search_items'       => __( 'Search Archives',                      'cpt-archives-i18n' ),
-			'not_found'          => __( 'No archives found.',                   'cpt-archives-i18n' ),
-			'not_found_in_trash' => __( 'No archives found in Trash.',          'cpt-archives-i18n' ),
-			'all_items'          => __( 'All Archives',                         'cpt-archives-i18n' ),
-			'menu_name'          => __( 'Archives',                             'cpt-archives-i18n' ),
-			'name_admin_bar'     => _x( 'Archive', 'add new on admin bar',      'cpt-archives-i18n' ),
+			'name'               => _x( 'Archives', 'post format general name', 'cpt-archives' ),
+			'singular_name'      => _x( 'Archive', 'post format singular name', 'cpt-archives' ),
+			'add_new'            => _x( 'Add New', 'cpt_archive',               'cpt-archives' ),
+			'add_new_item'       => __( 'Add New Archive',                      'cpt-archives' ),
+			'edit_item'          => __( 'Edit Archive',                         'cpt-archives' ),
+			'new_item'           => __( 'New Archive',                          'cpt-archives' ),
+			'view_item'          => __( 'View Archive',                         'cpt-archives' ),
+			'search_items'       => __( 'Search Archives',                      'cpt-archives' ),
+			'not_found'          => __( 'No archives found.',                   'cpt-archives' ),
+			'not_found_in_trash' => __( 'No archives found in Trash.',          'cpt-archives' ),
+			'all_items'          => __( 'All Archives',                         'cpt-archives' ),
+			'menu_name'          => __( 'Archives',                             'cpt-archives' ),
+			'name_admin_bar'     => _x( 'Archive', 'add new on admin bar',      'cpt-archives' ),
 		);
 
 		$args = array(
@@ -230,19 +231,19 @@ class CPT_Archives {
 
 		$messages['cpt_archive'] = array(
 			0  => '', // Unused. Messages start at index 1.
-			1  => sprintf( __( 'Archive updated. <a href="%s">View Archive</a>', 'cpt-archives-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
-			2  => __( 'Custom field updated.', 'cpt-archives-i18n' ),
-			3  => __( 'Custom field deleted.', 'cpt-archives-i18n' ),
-			4  => __( 'Archive updated.', 'cpt-archives-i18n' ),
+			1  => sprintf( __( 'Archive updated. <a href="%s">View Archive</a>', 'cpt-archives' ), esc_url( get_permalink( $post->ID ) ) ),
+			2  => __( 'Custom field updated.', 'cpt-archives' ),
+			3  => __( 'Custom field deleted.', 'cpt-archives' ),
+			4  => __( 'Archive updated.', 'cpt-archives' ),
 			/* translators: %s: date and time of the revision */
-			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Archive restored to revision from %s', 'cpt-archives-i18n' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			6  => sprintf( __( 'Archive published. <a href="%s">View Archive</a>', 'cpt-archives-i18n' ), esc_url( get_permalink( $post->ID ) ) ),
-			7  => __( 'Archive saved.', 'cpt-archives-i18n' ),
-			8  => sprintf( __( 'Archive submitted. <a target="_blank" href="%s">Preview Archive</a>', 'cpt-archives-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
-			9  => sprintf( __( 'Archive scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Archive</a>', 'cpt-archives-i18n' ),
+			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Archive restored to revision from %s', 'cpt-archives' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6  => sprintf( __( 'Archive published. <a href="%s">View Archive</a>', 'cpt-archives' ), esc_url( get_permalink( $post->ID ) ) ),
+			7  => __( 'Archive saved.', 'cpt-archives' ),
+			8  => sprintf( __( 'Archive submitted. <a target="_blank" href="%s">Preview Archive</a>', 'cpt-archives' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+			9  => sprintf( __( 'Archive scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Archive</a>', 'cpt-archives' ),
 			      // translators: Publish box date format, see http://php.net/date
-			      date_i18n( __( 'M j, Y @ G:i', 'cpt-archives-i18n' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
-			10 => sprintf( __( 'Archive draft updated. <a target="_blank" href="%s">Preview Archive</a>', 'cpt-archives-i18n' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
+			      date_i18n( __( 'M j, Y @ G:i', 'cpt-archives' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post->ID ) ) ),
+			10 => sprintf( __( 'Archive draft updated. <a target="_blank" href="%s">Preview Archive</a>', 'cpt-archives' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ),
 		);
 
 		return $messages;
