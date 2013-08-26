@@ -42,7 +42,7 @@ class CPT_Archives {
 		add_filter( 'post_type_archive_title', array( $this, 'post_type_archive_title' ) );
 
 		add_action( 'post_updated', array( $this, 'post_updated' ), 10, 3 );
-		add_action( 'delete_post', array( $this, 'deleted_post' ) );
+		add_action( 'delete_post', array( $this, 'delete_post' ) );
 
 		// Prevent the cpt_archive post type rules from being registered.
 		add_filter( 'cpt_archive_rewrite_rules', '__return_empty_array' );
