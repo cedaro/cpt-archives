@@ -1,0 +1,24 @@
+{
+  "name": "cpt-archives",
+  "version": "3.0.0",
+  "description": "A WordPress plugin manage post type archive titles, descriptions, and permalinks from the dashboard.",
+  "main": "Gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cedaro/cpt-archives.git"
+  },
+  "author": {
+    "name": "Brady Vercher",
+    "email": "brady@blazersix.com",
+    "url": "http://www.cedaro.com/"
+  },
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/cedaro/cpt-archives/issues"
+  },
+  "homepage": "https://github.com/cedaro/cpt-archives",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-wp-i18n": "~0.5"
+  }
+}

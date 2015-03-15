@@ -1,0 +1,27 @@
+{
+  "name": "cedaro/cpt-archives",
+  "description": "A WordPress plugin manage post type archive titles, descriptions, and permalinks from the dashboard.",
+  "keywords": ["wordpress"],
+  "type": "wordpress-plugin",
+  "homepage": "https://github.com/cedaro/cpt-archives",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "Brady Vercher",
+      "email": "brady@blazersix.com",
+      "homepage": "http://www.cedaro.com/"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/cedaro/cpt-archives/issues",
+    "source": "https://github.com/cedaro/cpt-archives"
+  },
+  "autoload": {
+    "psr-4": {
+      "Cedaro\\CPTArchives\\": "php/"
+    }
+  },
+  "require": {
+    "composer/installers": "~1.0"
+  }
+}
