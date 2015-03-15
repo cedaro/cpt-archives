@@ -1,4 +1,4 @@
-# CPT Archives
+# CPT Archives [![Build Status](https://travis-ci.org/cedaro/cpt-archives.png?branch=develop)](https://travis-ci.org/cedaro/cpt-archives)
 
 A WordPress plugin to manage post type archive titles, descriptions, and permalink slugs from the dashboard.
 
