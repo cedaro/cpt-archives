@@ -3,13 +3,13 @@
 A WordPress plugin to manage post type archive titles, descriptions, and permalink slugs from the dashboard.
 
 __Contributors:__ [Brady Vercher](https://twitter.com/bradyvercher)  
-__Requires:__ WordPress4.0+ & PHP 5.4+  
+__Requires:__ WordPress 4.0+ & PHP 5.4+  
 __License:__ [GPL-2.0+](http://www.gnu.org/licenses/gpl-2.0.html)
 
 
 ## Description
 
-*CPT Archives* allows for editing a post type's archive properties by registering a new `cpt_archive` custom post type that's connected to the post type. In fact, since it's really nothing more than a CPT, it can be further extended with plugins to add meta boxes for customizing your archive pages in new and interesting ways. By default, archive titles, descriptions and permalinks can be managed through a familiar interface.
+*CPT Archives* allows for editing a post type's archive properties by registering a new `cpt_archive` custom post type that's connected to the post type (that's a mind bender). In fact, since it's really nothing more than a CPT, it can be further extended with plugins to add meta boxes for customizing your archive pages in new and interesting ways. By default, archive titles, descriptions and permalinks can be managed through a familiar interface.
 
 Another benefit is that a new "Archive" section appears on the *Appearance &rarr; Menus* screen, making it easy to add your post type archives to a menu without using a custom link. Even if your archive slug is changed, you won't have to update the URL in your menu.
 
