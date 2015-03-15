@@ -13,6 +13,9 @@ __License:__ [GPL-2.0+](http://www.gnu.org/licenses/gpl-2.0.html)
 
 Another benefit is that a new "Archive" section appears on the *Appearance &rarr; Menus* screen, making it easy to add your post type archives to a menu without using a custom link. Even if your archive slug is changed, you won't have to update the URL in your menu.
 
+![Edit Archive Screen Screenshot](screenshot-1.png)  
+_Example of an Edit Archive screen. The archive title, description and permalinks can all be updated._
+
 
 ## Usage
 
