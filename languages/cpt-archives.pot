@@ -32,89 +32,90 @@ msgstr ""
 msgid "Learn more."
 msgstr ""
 
-#: php/PostType/Archive.php:81
+#: php/PostType/ArchiveHookProvider.php:83
 msgid "Add New Archive"
 msgstr ""
 
-#: php/PostType/Archive.php:82
+#: php/PostType/ArchiveHookProvider.php:84
 msgid "New Archive"
 msgstr ""
 
-#: php/PostType/Archive.php:83
+#: php/PostType/ArchiveHookProvider.php:85
 msgid "Edit Archive"
 msgstr ""
 
-#: php/PostType/Archive.php:84
+#: php/PostType/ArchiveHookProvider.php:86
 msgid "View Archive"
 msgstr ""
 
-#: php/PostType/Archive.php:85
+#: php/PostType/ArchiveHookProvider.php:87
 msgid "All Archives"
 msgstr ""
 
-#: php/PostType/Archive.php:86
+#: php/PostType/ArchiveHookProvider.php:88
 msgid "Search Archives"
 msgstr ""
 
-#: php/PostType/Archive.php:87
+#: php/PostType/ArchiveHookProvider.php:89
 msgid "Parent Archives:"
 msgstr ""
 
-#: php/PostType/Archive.php:88
+#: php/PostType/ArchiveHookProvider.php:90
 msgid "No archives found."
 msgstr ""
 
-#: php/PostType/Archive.php:89
+#: php/PostType/ArchiveHookProvider.php:91
 msgid "No archives found in Trash."
 msgstr ""
 
-#: php/PostType/Archive.php:453 php/PostType/Archive.php:456
+#: php/PostType/ArchiveHookProvider.php:508
+#: php/PostType/ArchiveHookProvider.php:511
 msgid "Archive updated."
 msgstr ""
 
-#: php/PostType/Archive.php:454
+#: php/PostType/ArchiveHookProvider.php:509
 msgid "Custom field updated."
 msgstr ""
 
-#: php/PostType/Archive.php:455
+#: php/PostType/ArchiveHookProvider.php:510
 msgid "Custom field deleted."
 msgstr ""
 
-#: php/PostType/Archive.php:458
+#: php/PostType/ArchiveHookProvider.php:513
 #. translators: %s: date and time of the revision
 msgid "Archive restored to revision from %s"
 msgstr ""
 
-#: php/PostType/Archive.php:459
+#: php/PostType/ArchiveHookProvider.php:514
 msgid "Archive published."
 msgstr ""
 
-#: php/PostType/Archive.php:460
+#: php/PostType/ArchiveHookProvider.php:515
 msgid "Archive saved."
 msgstr ""
 
-#: php/PostType/Archive.php:461
+#: php/PostType/ArchiveHookProvider.php:516
 msgid "Archive submitted."
 msgstr ""
 
-#: php/PostType/Archive.php:463
+#: php/PostType/ArchiveHookProvider.php:518
 msgid "Archive scheduled for: <strong>%1$s</strong>."
 msgstr ""
 
-#: php/PostType/Archive.php:465
+#: php/PostType/ArchiveHookProvider.php:520
 #. translators: Publish box date format, see http:php.net/date
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: php/PostType/Archive.php:467
+#: php/PostType/ArchiveHookProvider.php:522
 msgid "Archive draft updated."
 msgstr ""
 
-#: php/PostType/Archive.php:472
+#: php/PostType/ArchiveHookProvider.php:527
 msgid "View archive"
 msgstr ""
 
-#: php/PostType/Archive.php:473
+#: php/PostType/ArchiveHookProvider.php:528
 msgid "Preview archive"
 msgstr ""
 
@@ -140,27 +141,27 @@ msgstr ""
 msgid "http://www.cedaro.com/"
 msgstr ""
 
-#: php/PostType/Archive.php:76
+#: php/PostType/ArchiveHookProvider.php:78
 msgctxt "post type general name"
 msgid "Archives"
 msgstr ""
 
-#: php/PostType/Archive.php:77
+#: php/PostType/ArchiveHookProvider.php:79
 msgctxt "post type singular name"
 msgid "Archive"
 msgstr ""
 
-#: php/PostType/Archive.php:78
+#: php/PostType/ArchiveHookProvider.php:80
 msgctxt "admin menu"
 msgid "Archives"
 msgstr ""
 
-#: php/PostType/Archive.php:79
+#: php/PostType/ArchiveHookProvider.php:81
 msgctxt "add new on admin bar"
 msgid "Archive"
 msgstr ""
 
-#: php/PostType/Archive.php:80
+#: php/PostType/ArchiveHookProvider.php:82
 msgctxt "cpt_archive"
 msgid "Add New"
 msgstr ""
