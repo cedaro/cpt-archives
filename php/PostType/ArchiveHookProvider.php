@@ -39,6 +39,7 @@ class ArchiveHookProvider {
 	 * @var string
 	 */
 	protected $post_type = 'cpt_archive';
+
 	/**
 	 * Register hooks.
 	 *
@@ -560,10 +561,10 @@ class ArchiveHookProvider {
 	 *
 	 * @see array_splice()
 	 *
-	 * @param array $input       The input array.
-	 * @param int   $offset      The position to start from.
-	 * @param int   $length      Optional. The number of elements to remove. Defaults to 0.
-	 * @param mixed $replacement Optional. Item(s) to replace removed elements.
+	 * @param  array $input       The input array.
+	 * @param  int   $offset      The position to start from.
+	 * @param  int   $length      Optional. The number of elements to remove. Defaults to 0.
+	 * @param  mixed $replacement Optional. Item(s) to replace removed elements.
 	 * @return array The modified array.
 	 */
 	protected function array_asplice( $input, $offset, $length = 0, $replacement = array() ) {
