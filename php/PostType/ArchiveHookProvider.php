@@ -280,7 +280,7 @@ class ArchiveHookProvider {
 	 * Filter the default archive description template tags and replace with the
 	 * custom archive description.
 	 *
-	 * Works with both the_archive_description().
+	 * Works with the_archive_description().
 	 *
 	 * @since 3.0.0
 	 *

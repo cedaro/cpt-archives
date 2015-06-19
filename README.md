@@ -43,7 +43,7 @@ add_action( 'init', function() {
 	$GLOBALS['cptarchives']->register_archive( 'my_post_type', array(
 		'customize_rewrites' => true,
 		'show_in_menu'       => true,
-		'supports'           => array( 'title', 'editor' ),
+		'supports'           => array( 'title', 'editor', 'thumbnail' ),
 	) );
 } );
 ```
@@ -70,6 +70,35 @@ add_action( 'init', function() {
     </tr>
   </tbody>
 </table>
+
+
+### Post Type Archive Templates
+
+_CPT Archives_ works with default archive template tags. Additional data for the archive post object can be retrieved using the `$cptarchives` global (be sure it exists before using it).
+
+The `archive-my_post_type.php` template for the example CPT registered above could look something like this:
+
+```php
+<?php get_header(); ?>
+
+<?php the_archive_title( '<h1 class="archive-title">', '</h1>' ); ?>
+
+<?php the_archive_description( '<div class="archive-description">', '</div>' ); ?>
+
+<figure class="archive-featured-image">
+  <?php echo get_the_post_thumbnail( $cptarchives->get_archive_id() ); ?>
+</figure>
+
+<div class="archive-meta">
+  <?php echo $cptarchives->get_archive_meta( 'meta_key', true ); ?>
+</div>
+
+<?php while ( have_posts() ) : the_post(); ?>
+  <?php get_template_part( 'content' ); ?>
+<?php endwhile; ?>
+
+<?php get_footer(); ?>
+```
 
 
 ## Installation
