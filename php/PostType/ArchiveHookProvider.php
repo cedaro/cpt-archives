@@ -431,7 +431,7 @@ class ArchiveHookProvider {
 
 		foreach ( $archives as $archive ) {
 			// Skip if show_in_menu is false.
-			if ( ! $archive->show_in_menu ) {
+			if ( ! $archive->show_in_menu || ! post_type_exists( $archive->post_type ) ) {
 				continue;
 			}
 
