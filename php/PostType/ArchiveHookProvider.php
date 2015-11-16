@@ -116,7 +116,7 @@ class ArchiveHookProvider {
 			// This allows the slug to be edited. Rules won't be generated.
 			'rewrite'                    => 'cpt_archive',
 			'query_var'                  => false,
-			'show_ui'                    => false,
+			'show_ui'                    => true,
 			'show_in_admin_bar'          => false,
 			'show_in_menu'               => false,
 			'show_in_nav_menus'          => true,
