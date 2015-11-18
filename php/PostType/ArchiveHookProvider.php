@@ -306,7 +306,7 @@ class ArchiveHookProvider {
 	 * @param  array $args Menu display args.
 	 * @return array
 	 */
-	public function nav_menu_classes( $items, $args ) {
+	protected function nav_menu_classes( $items, $args ) {
 		global $wp;
 
 		if ( is_404() || is_search() ) {
@@ -564,7 +564,7 @@ class ArchiveHookProvider {
 	 * @param string $post_type Post type name.
 	 * @param WP_Post $post Post object.
 	 */
-	public function maybe_remove_slug_meta_box( $post ) {
+	protected function maybe_remove_slug_meta_box( $post ) {
 		$archive = $this->plugin->get_archive( $post->archive_for_post_type );
 		if ( ! $archive || ! $archive->can_customize_rewrites() ) {
 			remove_meta_box( 'slugdiv', $this->post_type, 'normal' );
