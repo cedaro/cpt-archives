@@ -404,7 +404,7 @@ class ArchiveHookProvider {
 
 		if ( ! empty( $archive->supports ) ) {
 			add_post_type_support( $this->post_type, $archive->supports );
-		} elseif ( false !== $args->supports ) {
+		} elseif ( isset( $archive->supports ) && false !== $archive->supports ) {
 			add_post_type_support( $this->post_type, array( 'title', 'editor' ) );
 		}
 	}
