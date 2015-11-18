@@ -22,18 +22,32 @@ use Cedaro\CPTArchives\PostType\ArchiveHookProvider;
  */
 require( __DIR__ . '/autoload.php' );
 
-global $cptarchives;
+/**
+ * Retrieve the main plugin instance.
+ *
+ * @since 3.0.1
+ *
+ * @return Plugin
+ */
+function cptarchives() {
+	global $cptarchives;
 
-$cptarchives = new Plugin;
-$cptarchives->set_plugin_file( __DIR__ . '/cpt-archives.php' )
-            ->set_archive_class( '\Cedaro\CPTArchives\PostType\Archive' );
+	if ( null === $cptarchives ) {
+		$cptarchives = new Plugin();
+	}
+
+	return $cptarchives;
+}
+
+cptarchives()->set_plugin_file( __DIR__ . '/cpt-archives.php' )
+             ->set_archive_class( '\Cedaro\CPTArchives\PostType\Archive' );
 
 /**
  * Load the plugin.
  *
  * @since 3.0.0
  */
-add_action( 'plugins_loaded', function() use ( $cptarchives ) {
-	$cptarchives->register_hooks( new ArchiveHookProvider );
-	$cptarchives->load();
+add_action( 'plugins_loaded', function() {
+	cptarchives()->register_hooks( new ArchiveHookProvider );
+	cptarchives()->load();
 } );
