@@ -63,6 +63,7 @@ class ArchiveHookProvider {
 
 		// High priority makes archive links appear last in submenus.
 		$this->add_action( 'load-post.php',              'register_archive_feature_support' );
+		$this->add_action( 'load-post.php',              'maybe_make_archive_viewable' );
 		$this->add_action( 'admin_menu',                 'admin_menu', 100 );
 		$this->add_action( 'parent_file',                'parent_file' );
 		$this->add_filter( 'post_updated_messages',      'updated_messages' );
@@ -389,23 +390,40 @@ class ArchiveHookProvider {
 			return;
 		}
 
-		if ( isset( $_GET['post'] ) ) {
-		 	$post_id = (int) $_GET['post'];
-		} elseif ( isset( $_POST['post_ID'] ) ) {
-		 	$post_id = (int) $_POST['post_ID'];
-		}
+		$archive = $this->get_current_screen_archive();
 
-		if ( empty( $post_id ) ) {
+		if ( empty( $archive) ) {
 			return;
 		}
-
-		$post_type = get_post( $post_id )->archive_for_post_type;
-		$archive   = $this->plugin->get_archive( $post_type );
 
 		if ( ! empty( $archive->supports ) ) {
 			add_post_type_support( $this->post_type, $archive->supports );
 		} elseif ( isset( $archive->supports ) && false !== $archive->supports ) {
 			add_post_type_support( $this->post_type, array( 'title', 'editor' ) );
+		}
+	}
+
+	/**
+	 * Dynamically update the archive post type's publicly queryable argument.
+	 *
+	 * Sets the publicly queryable argument to true to make the permalink
+	 * editor visible.
+	 *
+	 * @see https://core.trac.wordpress.org/ticket/17609#comment:52
+	 *
+	 * @since 3.0.1
+	 */
+	protected function maybe_make_archive_viewable() {
+		global $wp_post_types;
+
+		$archive = $this->get_current_screen_archive();
+
+		if ( empty( $archive) ) {
+			return;
+		}
+
+		if ( $archive->can_customize_rewrites() ) {
+			$wp_post_types['cpt_archive']->publicly_queryable = true;
 		}
 	}
 
@@ -551,6 +569,32 @@ class ArchiveHookProvider {
 		if ( ! $archive || ! $archive->can_customize_rewrites() ) {
 			remove_meta_box( 'slugdiv', $this->post_type, 'normal' );
 		}
+	}
+
+	/**
+	 * Retrieve the archive post for the current archive screen.
+	 *
+	 * @since 3.0.1
+	 *
+	 * @return WP_Post|null
+	 */
+	protected function get_current_screen_archive() {
+		if ( $this->post_type != get_current_screen()->post_type ) {
+			return null;
+		}
+
+		if ( isset( $_GET['post'] ) ) {
+			$post_id = (int) $_GET['post'];
+		} elseif ( isset( $_POST['post_ID'] ) ) {
+			$post_id = (int) $_POST['post_ID'];
+		}
+
+		if ( empty( $post_id ) ) {
+			return null;
+		}
+
+		$post_type = get_post( $post_id )->archive_for_post_type;
+		return $this->plugin->get_archive( $post_type );
 	}
 
 	/**
