@@ -132,7 +132,11 @@ class Archive {
 	 * @return bool
 	 */
 	public function can_customize_rewrites( $type = '' ) {
-		return true === $this->customize_rewrites || $type === $this->customize_rewrites;
+		if ( ! empty( $type ) ) {
+			return true === $this->customize_rewrites || $type === $this->customize_rewrites;
+		}
+
+		return (bool) $this->customize_rewrites;
 	}
 
 	/**
