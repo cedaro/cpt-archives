@@ -58,7 +58,7 @@ class ArchiveHookProvider {
 		$this->add_filter( 'post_type_link',              'post_type_link', 10, 3 );
 		$this->add_filter( 'post_type_archive_title',     'post_type_archive_title' );
 		$this->add_filter( 'get_the_archive_description', 'post_type_archive_description' );
-		$this->add_filter( 'wp_get_nav_menu_items',       'nav_menu_classes', 10, 3 );
+		$this->add_filter( 'wp_get_nav_menu_items',       'nav_menu_classes' );
 		$this->add_action( 'admin_bar_menu',              'admin_bar_edit_menu', 80 );
 
 		// High priority makes archive links appear last in submenus.
@@ -303,10 +303,9 @@ class ArchiveHookProvider {
 	 * @since 3.0.0
 	 *
 	 * @param  array $items List of menu items.
-	 * @param  array $args Menu display args.
 	 * @return array
 	 */
-	protected function nav_menu_classes( $items, $args ) {
+	protected function nav_menu_classes( $items ) {
 		global $wp;
 
 		if ( is_404() || is_search() ) {
