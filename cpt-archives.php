@@ -12,7 +12,7 @@
  * Plugin Name:       CPT Archives
  * Plugin URI:        https://github.com/cedaro/cpt-archives
  * Description:       Manage post type archive titles, descriptions, and permalinks from the dashboard.
- * Version:           3.0.0
+ * Version:           3.0.2
  * Author:            Cedaro
  * Author URI:        http://www.cedaro.com/
  * License:           GPL-2.0+

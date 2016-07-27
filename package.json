@@ -1,6 +1,6 @@
 {
   "name": "cpt-archives",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "description": "A WordPress plugin to manage post type archive titles, descriptions, and permalinks from the dashboard.",
   "main": "Gruntfile.js",
   "repository": {
