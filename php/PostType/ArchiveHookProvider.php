@@ -292,6 +292,7 @@ class ArchiveHookProvider {
 		if ( is_post_type_archive() && $this->plugin->has_post_type_archive() ) {
 			$post_type_object = get_queried_object();
 			$description      = $this->plugin->get_archive_description( $post_type_object->name, $description );
+			$description 	  = apply_filters('the_content', $description ); 
 		}
 
 		return $description;
